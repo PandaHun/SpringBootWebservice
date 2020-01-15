@@ -1,5 +1,6 @@
 package com.panda.springboot.domain.posts;
 
+import com.panda.springboot.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

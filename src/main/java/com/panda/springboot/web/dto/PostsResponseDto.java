@@ -2,6 +2,7 @@ package com.panda.springboot.web.dto;
 
 import com.panda.springboot.domain.posts.Posts;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 public class PostsResponseDto {
