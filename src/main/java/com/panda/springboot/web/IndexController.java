@@ -1,5 +1,6 @@
 package com.panda.springboot.web;
 
+import com.panda.springboot.config.oauth.LoginUser;
 import com.panda.springboot.config.oauth.dto.SessionUser;
 import com.panda.springboot.domain.user.User;
 import com.panda.springboot.service.posts.PostsService;
@@ -20,11 +21,10 @@ public class IndexController {
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @LoginUser SessionUser user) {
         model.addAttribute("posts", postsService.findAllDesc());
-        SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
-        if (sessionUser != null) {
-            model.addAttribute("userName", sessionUser.getName());
+        if (user != null) {
+            model.addAttribute("userName", user.getName());
         }
 
         return "index";
