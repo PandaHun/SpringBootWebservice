@@ -1,25 +1,32 @@
 package com.panda.springboot.web;
 
+import com.panda.springboot.config.oauth.dto.SessionUser;
+import com.panda.springboot.domain.user.User;
 import com.panda.springboot.service.posts.PostsService;
 import com.panda.springboot.web.dto.PostsResponseDto;
-import com.panda.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
 
     private final PostsService postsService;
+    private final HttpSession httpSession;
 
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("posts", postsService.findAllDesc());
+        SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
+        if (sessionUser != null) {
+            model.addAttribute("userName", sessionUser.getName());
+        }
+
         return "index";
     }
 
